@@ -13,6 +13,7 @@ type Store = {
   currentIndex: number;
   tokenIssuanceData: TokenIssuanceData;
   issuedTokenId: string;
+  addUserData: {};
   setEmail: (authEmail: string) => void;
   setUsername: (username: string) => void;
   setUser: (authUser: IUser | null) => void;
@@ -24,6 +25,7 @@ type Store = {
   setTokenIssuanceData: (data: TokenIssuanceData) => void;
   resetTokenIssuanceData: () => void;
   setIssuedTokenId: (tokenId: string) => void;
+  setAddUserData: (addUserData: {}) => void;
 };
 
 const defaultTokenIssuanceData: TokenIssuanceData = {
@@ -93,71 +95,6 @@ const defaultTokenIssuanceData: TokenIssuanceData = {
     gauranteedIncome: false,
     financialProjectionLink: "",
   },
-  // tokenType: {
-  //   listingStatus: "Wait-listed",
-  //   propertyClass: "Wait-listed",
-  //   investmentType: "Medium Co-own",
-  // },
-  // location: {
-  //   state: "Lagos",
-  //   city: "Ikeja",
-  //   lga: "Ikeja Local Government",
-  //   area: "Airport way",
-  //   estate: "Love Estate",
-  //   streetName: "ABC avenue",
-  //   houseNumber: "100",
-  //   countryId: 161,
-  // },
-  // property: {
-  //   propertyValue: 200000,
-  //   totalTokenVolume: 10000,
-  //   openHouseDate: "2024-03-20",
-  //   coolOffExpiresAt: "2024-03-21",
-  //   issuePrice: 1500,
-  //   issueStartsAt: "2024-03-22",
-  //   issueExpiresAt: "2024-03-23",
-  //   dealingExpiresAt: "2024-03-23",
-  //   dealersMinimumSubscriptionUnit: 100,
-  //   lockdownExpiresAt: "2024-03-23",
-  //   minimumSubscriptionUnit: 50,
-  //   issueRetainedToken: 20,
-  //   annualReturnEstimate: 30,
-  //   appreciationEstimate: 40,
-  //   videoLink: "https://youtube.com",
-  //   currency: "Naira",
-  // },
-  // presellTerms: {
-  //   minimumPledgeDeposit: 10,
-  //   firstCallDate: "2024-03-22",
-  //   totalPledgeCap: 20,
-  // },
-  // propertyUnits: [
-  //   {
-  //     sqm: 1342,
-  //     exitingTokenVolume: 12347,
-  //     unitType: "Condo",
-  //     noOfBedrooms: 1,
-  //     noOfToilets: 1,
-  //     noOfLivingRooms: 1,
-  //     fittedKitchen: "No",
-  //     furnishing: "Partially Furnish",
-  //   },
-  // ],
-  // description: {
-  //   propertyDescription: "The desc",
-  //   amenities: ["Access Road"],
-  // },
-  // distribution: {
-  //   frequency: "",
-  //   tenure: "",
-  //   startDate: "",
-  //   relistAtMarturity: false,
-  //   confersVotingRight: false,
-  //   canLeverage: false,
-  //   issuerBuyBack: false,
-  //   gauranteedIncome: false,
-  //   financialProjectionLink: "",
-  // },
 };
 
 const useStore = create(
@@ -173,6 +110,7 @@ const useStore = create(
       currentIndex: 0,
       tokenIssuanceData: defaultTokenIssuanceData,
       issuedTokenId: "",
+      addUserData: {},
       setEmail: (authEmail: string) =>
         set((state) => ({ ...state, email: authEmail })),
       setUsername: (username: string) =>
@@ -188,11 +126,10 @@ const useStore = create(
       setOpenWalletFilter: (walletFilterPop) =>
         set((state) => ({ ...state, openWalletFilter: walletFilterPop })),
       setCurrentIndex: (index: number) => set({ currentIndex: index }),
-      setTokenIssuanceData: (data: TokenIssuanceData) =>
-        set({ tokenIssuanceData: data }),
-      resetTokenIssuanceData: () =>
-        set({ tokenIssuanceData: defaultTokenIssuanceData }),
+      setTokenIssuanceData: (data: TokenIssuanceData) => set({ tokenIssuanceData: data }),
+      resetTokenIssuanceData: () => set({ tokenIssuanceData: defaultTokenIssuanceData }),
       setIssuedTokenId: (tokenId: string) => set({ issuedTokenId: tokenId }),
+      setAddUserData: (addUserData: {}) => set({ addUserData: addUserData }),
     }),
     {
       name: "store", // Set a name for your persisted store

@@ -41,6 +41,8 @@ export const getRoles = async () => {
 
 
 
+
+
 // Token Issuance*************************************************
 export const getPropertyTitles = async () => {
   const res = await publicApi.get("/api/v1/utilities/property-titles");
@@ -111,10 +113,20 @@ export const getDashboardDatas = async () => {
   const res = await privateApi.get("/api/v1/admin/dashboard");
   return res.data;
 };
+export const getAppUsers = async () => {
+  const res = await privateApi.get("/api/v1/admin/users");
+  return res.data.data;
+};
 export const getTokenReviews = async () => {
   const res = await privateApi.get("/api/v1/property-tokens");
   return res.data.data;
 };
+
+
+
+
+
+
 // Utilities
 export const getCountries = async () => {
   const res = await publicApi.get("/api/v1/utilities/locations/countries");

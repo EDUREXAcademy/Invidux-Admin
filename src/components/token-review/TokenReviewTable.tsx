@@ -153,7 +153,7 @@ const TokenReviewTable = () => {
                 className={`${index % 2 === 0 ? "bg-white" : "bg-[#F7F4ED]"}`}
               >
                 <td className="px-4 py-4 whitespace-nowrap text-left">
-                  {tokenReview?.tokenIssuer}
+                {tokenReview?.tokenIssuer?.tokenIssuer === null ? 'Invidux' : tokenReview?.tokenIssuer?.tokenIssuer}
                 </td>
                 <td className="px-4 py-4 whitespace-nowrap font-medium">
                   {tokenReview?.tokenCode}

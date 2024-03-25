@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import {getCountries, getDashboardDatas, getInvestmentTypes, getListingStatus, getPropertyAmenities, getPropertyClass, getPropertyTitles, getRoles, getTokenReviews, getUnitTypes, getUser, getUserWallet } from "@/api";
+import {getAppUsers, getCountries, getDashboardDatas, getInvestmentTypes, getListingStatus, getPropertyAmenities, getPropertyClass, getPropertyTitles, getRoles, getTokenReviews, getUnitTypes, getUser, getUserWallet } from "@/api";
 
 export const useCountries = () => {
   return useQuery({
@@ -19,13 +19,20 @@ export const useTokenReviews = () => {
     queryFn: getTokenReviews,
   });
 };
-
 export const useUser = () => {
   return useQuery({
     queryKey: ["userData"],
     queryFn: getUser,
   });
 };
+export const useAppUsers = () => {
+  return useQuery({
+    queryKey: ["AppUsers"],
+    queryFn: getAppUsers,
+  });
+};
+
+
 
 export const useUserWallet = () => {
   return useQuery({

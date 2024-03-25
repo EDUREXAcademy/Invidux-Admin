@@ -192,7 +192,7 @@ const Distribution = (props: Props) => {
         },
       });
     }
-  }, [ isValid, submitData]);
+  }, [isValid, submitData]);
 
 
   useEffect(() => {

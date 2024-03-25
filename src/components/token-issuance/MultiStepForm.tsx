@@ -92,13 +92,13 @@ const MultiStepForm = ({ children }: Props) => {
           <div className={`${currentIndex === 5 ? "block" : "hidden"}`}>
             <Description />
           </div>
-          {/* <div className={`${currentIndex === 6 ? "block" : "hidden"}`}>
+          <div className={`${currentIndex === 6 ? "block" : "hidden"}`}>
             <Distribution />
-          </div> */}
+          </div>
           <div className={`${currentIndex === 7 ? "block" : "hidden"}`}>
             <FilesUpload />
           </div>
-          {currentIndex === 6 && <Distribution />}
+          {/* {currentIndex === 6 && <Distribution />} */}
           {/* {currentIndex === 3 && <PreSellingTerms />}
           {currentIndex === 4 && <PropertyDetails />}
           {currentIndex === 5 && <Description />}
