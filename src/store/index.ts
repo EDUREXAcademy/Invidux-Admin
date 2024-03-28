@@ -14,6 +14,7 @@ type Store = {
   tokenIssuanceData: TokenIssuanceData;
   issuedTokenId: string;
   addUserData: {};
+  newUserCurrentIndex: number;
   setEmail: (authEmail: string) => void;
   setUsername: (username: string) => void;
   setUser: (authUser: IUser | null) => void;
@@ -26,6 +27,7 @@ type Store = {
   resetTokenIssuanceData: () => void;
   setIssuedTokenId: (tokenId: string) => void;
   setAddUserData: (addUserData: {}) => void;
+  setNewUserCurrentIndex: (userIndex: number) => void;
 };
 
 const defaultTokenIssuanceData: TokenIssuanceData = {
@@ -111,6 +113,7 @@ const useStore = create(
       tokenIssuanceData: defaultTokenIssuanceData,
       issuedTokenId: "",
       addUserData: {},
+      newUserCurrentIndex: 0,
       setEmail: (authEmail: string) =>
         set((state) => ({ ...state, email: authEmail })),
       setUsername: (username: string) =>
@@ -130,6 +133,7 @@ const useStore = create(
       resetTokenIssuanceData: () => set({ tokenIssuanceData: defaultTokenIssuanceData }),
       setIssuedTokenId: (tokenId: string) => set({ issuedTokenId: tokenId }),
       setAddUserData: (addUserData: {}) => set({ addUserData: addUserData }),
+      setNewUserCurrentIndex: (userIndex: number) => set({ newUserCurrentIndex: userIndex}),
     }),
     {
       name: "store", // Set a name for your persisted store

@@ -10,6 +10,7 @@ type Props = {};
 
 const ManageUserTable = ({ users }: any) => {
   const [isUserModal, setIsUserModal] = useState(false)
+  const [user, setUser] = useState({})
 
   return (
     <div className=" bg-[#F0F2F5] py-5 min-h-[calc(100vh-70px)]">
@@ -141,15 +142,16 @@ const ManageUserTable = ({ users }: any) => {
                       <td className={`px-5 py-4 whitespace-nowrap `}>
                         {user?.registrationStatus}
                       </td>
-                      <td className={`px-5 py-4 whitespace-nowrap`} onClick={() => setIsUserModal(true)}>
+                      <td className={`px-5 py-4 whitespace-nowrap relative`} onClick={() => {setIsUserModal(true), setUser(user)}}>
                         <Eye className="cursor-pointer h-full" size={20} />
                       </td>
-                      {isUserModal && <UserModal isUserModal={isUserModal} setIsUserModal={setIsUserModal} user={user} /> }
+                      {/* {isUserModal && <UserModal isUserModal={isUserModal} setIsUserModal={setIsUserModal} user={user} /> } */}
                     </tr>
                   );
                 })}
               </tbody>
             </table>
+            {isUserModal && <UserModal isUserModal={isUserModal} setIsUserModal={setIsUserModal} user={user} /> } 
           </div>
         </>
       )}

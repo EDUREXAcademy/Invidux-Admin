@@ -581,8 +581,9 @@ const ViewTokenReview = ({ params }: any) => {
             </div>
           </div>
           <div className="mb-4">
-            <Button fullWidth disabled={assetDetail?.tokenApproval?.status === 'Approved' ? true : false }  variant="dark" onClick={() => approveToken(assetDetail?.id)}>
-              {assetDetail?.tokenApproval?.status === 'Approved' ? 'Approved' : "Approve"}
+            <Button fullWidth disabled={assetDetail?.approval?.status === 'Approved' ? true : false }  variant="dark" onClick={() => approveToken(assetDetail?.id)}>
+              {/* {assetDetail?.approval?.status === 'Approved' ? 'Approved' : "Approve"} */}
+              Approve
             </Button>
           </div> 
           <Button
@@ -590,9 +591,10 @@ const ViewTokenReview = ({ params }: any) => {
             variant="outline"
             className="w-full"
             onClick={() => rejectToken(assetDetail?.id)}
-            disabled={assetDetail?.approval === 'Rejected' ? true : false } 
+            disabled={assetDetail?.approval?.status === 'Rejected' ? true : false } 
           >
-            {assetDetail?.approval === 'Rejected' ? 'Rejected' : "Reject"}
+            {/* {assetDetail?.approval?.status === 'Rejected' ? 'Rejected' : "Reject"} */}
+            Reject
           </Button>
         </div>
       </div>

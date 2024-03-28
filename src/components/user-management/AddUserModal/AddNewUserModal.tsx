@@ -22,9 +22,8 @@ import Contact from "./Contact";
 const AddNewUserModal= ({isAddUser, setIsAddUser }: any) => {
 
   const { control, handleSubmit } = useForm();
-  const { currentIndex, setCurrentIndex, resetTokenIssuanceData } = useStore()
+  const { newUserCurrentIndex, setNewUserCurrentIndex, setAddUserData, resetTokenIssuanceData } = useStore()
   const [formData, setFormData] = useState({})
-
   const submitForm = async () => {
 
   }
@@ -38,8 +37,9 @@ const AddNewUserModal= ({isAddUser, setIsAddUser }: any) => {
             <div className="flex justify-between items-center">
               <h3 className="text-neutral-950 text-2xl">Add New User</h3>
               <div onClick={() => {
-                setCurrentIndex(0)
-                resetTokenIssuanceData()
+                setNewUserCurrentIndex(0)
+                setAddUserData({})
+                // resetTokenIssuanceData()
                 setIsAddUser(false)
               }}>
                 <X />
@@ -47,24 +47,24 @@ const AddNewUserModal= ({isAddUser, setIsAddUser }: any) => {
             </div>
           </DialogTitle>
           <DialogDescription>
-            <Progress value={((currentIndex + 1) / (formTitles.length)) * 100} className="h-1 text-[#B1924E] bg-[#E5E5E5]" indicatorColor="bg-[#B1924E]" />
+            <Progress value={((newUserCurrentIndex + 1) / (formTitles.length)) * 100} className="h-1 text-[#B1924E] bg-[#E5E5E5]" indicatorColor="bg-[#B1924E]" />
             <div className="flex items-center gap-4 mt-3 mb-5">
               <div className="h-9 w-9 rounded-full border-2 border-[#B1924E] flex items-center justify-center">
                 <div className="h-3 w-3 rounded-full bg-[#B1924E]" />
               </div>
-              <p>{formTitles[currentIndex]}</p>
+              <p>{formTitles[newUserCurrentIndex]}</p>
             </div>
           </DialogDescription>
         </DialogHeader>
         <div>
-          <div className={`${currentIndex === 0 ? "block" : "hidden"}`}>
+          <div className={`${newUserCurrentIndex === 0 ? "block" : "hidden"}`}>
             <Profile />
           </div>
-          <div className={`${currentIndex === 1 ? "block" : "hidden"}`}>
+          <div className={`${newUserCurrentIndex === 1 ? "block" : "hidden"}`}>
             <Contact />
           </div>
-          <div className={`${currentIndex === 2 ? "block" : "hidden"}`}>
-            <NextOKin />
+          <div className={`${newUserCurrentIndex === 2 ? "block" : "hidden"}`}>
+            <NextOKin setIsAddUser = {setIsAddUser } />
           </div>
         </div>
       </DialogContent>

@@ -127,7 +127,7 @@ interface TokenIssuanceData {
   tokenType: TokenType;
   location: Location;
   property: Property;
-  presellTerms: PresellTerms;
+  presellTerms: PresellTerms | null;
   propertyUnits: PropertyUnit[];
   description: Description;
   distribution: Distribution;

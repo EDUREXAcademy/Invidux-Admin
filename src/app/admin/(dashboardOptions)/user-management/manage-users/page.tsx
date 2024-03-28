@@ -13,7 +13,7 @@ const ManageUsers = () => {
   const [isAddUser, setIsAddUser] = useState(false)
   return (
     <div className="">
-      {/* {isPending && <LoadingOverlay/> } */}
+      {isPending && <LoadingOverlay/> }
       {isAddUser && <AddNewUserModal isAddUser={isAddUser} setIsAddUser={setIsAddUser} /> }
       <div className="px-[3%]">
         <div className="flex justify-between items-center pt-5 pb-4 ">

@@ -31,14 +31,12 @@ export const resetPassword = async (data: {email:string; password:string}) => {
   const res = await publicApi.post("/api/v1/reset-password", data);
   return res.data;
 };
-export const getRoles = async () => {
-  const res = await publicApi.get("/api/v1/utilities/users/roles");
+
+// Admin - PrivateAPI ****************************************************************************
+export const addNewUser = async (data: any) => {
+  const res = await privateApi.post("/api/v1/admin/add-user", data);
   return res.data;
 };
-
-
-
-
 
 
 
@@ -122,11 +120,6 @@ export const getTokenReviews = async () => {
   return res.data.data;
 };
 
-
-
-
-
-
 // Utilities
 export const getCountries = async () => {
   const res = await publicApi.get("/api/v1/utilities/locations/countries");
@@ -136,6 +129,27 @@ export const getUser = async () => {
   const res = await privateApi.get("/api/v1/profile/current-user");
   return res.data;
 };
+export const getIdTypes = async () => {
+  const res = await privateApi.get("/api/v1/utilities/users/kyc-idcard");
+  return res.data.data;
+};
+export const getEmploymentStatus = async () => {
+  const res = await privateApi.get("/api/v1/utilities/employment-status");
+  return res.data.data;
+};
+export const getIncomeRange = async () => {
+  const res = await privateApi.get("/api/v1/utilities/income-ranges");
+  return res.data.data;
+};
+export const getJobSectors = async () => {
+  const res = await privateApi.get("/api/v1/utilities/job-sectors");
+  return res.data.data;
+};
+export const getRoles = async () => {
+  const res = await publicApi.get("/api/v1/utilities/users/roles");
+  return res.data.data;
+};
+
 
 
 

@@ -1,6 +1,6 @@
 "use client";
 import { Button } from "@/components/reusable/Buttons";
-import MultiStepForm from "@/components/token-issuance/MultiStepForm";
+import MultiStepForm from "@/components/token-review/MultiStepForm";
 import TokenReviewTable from "@/components/token-review/TokenReviewTable";
 import { Plus } from "lucide-react";
 import React, { useState } from "react";

@@ -1,248 +1,276 @@
-"use client"
-import React, { useEffect } from 'react'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { useForm } from 'react-hook-form'
-import { ArrowLeft, Plus } from 'lucide-react'
-import useStore from '@/store'
-import { useUnitTypes } from '@/hooks/queries'
-import { TextField } from '@/components/reusable/FormInput'
-import { Button, ForwardButton } from '@/components/reusable/Buttons'
+"use client";
+import React, { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { ArrowLeft, Plus } from "lucide-react";
+import useStore from "@/store";
+import { useCountries, useEmploymentStatus, useIdTypes, useIncomeRange, useJobSectors, useUnitTypes } from "@/hooks/queries";
+import { TextField } from "@/components/reusable/FormInput";
+import { Button, ForwardButton } from "@/components/reusable/Buttons";
 
 
-type Props = {}
-
-const Contact = (props: Props) => {
+const Contact = () => {
   const { control, handleSubmit, setValue, getValues } = useForm();
+  const { data: countries, isPending: countryIsPending } = useCountries();
+  const { data: idTypes, isPending: idTypesIsPending } = useIdTypes();
+  const { data: incomeRange, isPending: incomeRangeIsPending} = useIncomeRange();
+  const { data: employmentStatus, isPending: employmentStatusIsPending } = useEmploymentStatus();
+  const { data: jobSectors, isPending: jobSectorsIsPending } = useJobSectors();
+  const [countryId, setCountryId] = useState("");
+  const [idType, setIdType] = useState("");
+  const [incomeRangeValue, setIncomeRangeValue] = useState('')
+  const [employmentStatusValue, setEmploymentStatusValue] = useState('')
+  const [jobSector, setJobSector] = useState('')
+  const [investmentLimit, setInvestmentLimit] = useState(0)
 
-  const { tokenIssuanceData, setTokenIssuanceData, currentIndex, setCurrentIndex } = useStore()
-  const {data: unitTypes, isPending} = useUnitTypes()
+  const {
+    addUserData,
+    setAddUserData,
+    newUserCurrentIndex,
+    setNewUserCurrentIndex,
+  } = useStore();
 
-  const handleUnitTypesChange = (value: any) => {
-    if (!value) {
-      console.error("Event object or event target is undefined.");
-      return;
-    }
-    setValue('unitType', value);
-  };
-  const handleBedroomsChange = (value: any) => {
-    if (!value) {
-      console.error("Event object or event target is undefined.");
-      return;
-    }
-    setValue('noOfBedrooms', value);
-  };
-  const handleToiletsChange = (value: any) => {
-    if (!value) {
-      console.error("Event object or event target is undefined.");
-      return;
-    }
-    setValue('noOfToilets', value);
-  };
-  const handleFittedKitchenChange = (value: any) => {
-    if (!value) {
-      console.error("Event object or event target is undefined.");
-      return;
-    }
-    setValue('fittedKitchen', value);
-  };
-  const handleFurnishingChange = (value: any) => {
-    if (!value) {
-      console.error("Event object or event target is undefined.");
-      return;
-    }
-    setValue('furnishing', value);
-  };
-  const handleLivingRoomsChange = (value: any) => {
-    if (!value) {
-      console.error("Event object or event target is undefined.");
-      return;
-    }
-    setValue('noOfLivingRooms', value);
-  };
-
-  const savePropertyDetails = (data: any) => {
-    console.log({ data })
-    setTokenIssuanceData({ 
-      ...tokenIssuanceData, 
-      propertyUnits: [{ 
-        ...data, 
-        noOfLivingRooms: Number(data?.noOfLivingRooms), 
-        noOfBedrooms: Number(data?.noOfBedrooms), 
-        noOfToilets: Number(data.noOfToilets),
-        exitingTokenVolume: Number(data.exitingTokenVolume),
-        sqm: Number(data.sqm)
-      }] 
+  const saveContact = (data: any) => {
+    console.log({ data });
+    setAddUserData({
+      ...addUserData,
+      contactAddress: {
+        address : data.address,
+        city: data.city,
+        state: data.state,
+        postalCode: data.postalCode,
+        countryId: Number(countryId),
+      },
+      kycInfo: {
+        idType: idType,
+        idNumber: data.idNumber,
+        expiryDate: data.expiryDate,
+      },
+      incomeInfo: {
+        incomeRange: incomeRangeValue,
+        employmentStatus: employmentStatusValue,
+        jobSector: jobSector,
+        investmentLimit: investmentLimit,
+      },
     })
-      setCurrentIndex(currentIndex + 1)
-  }
-
-  useEffect(() => {
-    console.log({ tokenIssuanceData })
-  }, [tokenIssuanceData])
+    setNewUserCurrentIndex(newUserCurrentIndex + 1);
+  };
 
   return (
-    <form className='space-y-5 h-full mx-auto ' onSubmit={handleSubmit(savePropertyDetails)}>
-      <p className=''>Property Units</p>
+    <form
+      className="space-y-5 h-full mx-auto "
+      onSubmit={handleSubmit(saveContact)}
+    >
+      <p className="font-bold">Property Units</p>
 
-      <div className='w-full flex gap-4'>
-        <div className='w-full'>
-          <Select name='unitType' onValueChange={handleUnitTypesChange} >
-            {/* <FormControl> */}
-            <label htmlFor="unitType" className="block text-neutral-950 text-sm font-normal mb-[6px] leading-tight">Unit type</label>
-            <SelectTrigger className="h-12 appearance-none outline-none focus-visible:ring-0 border border-[#838383] w-full flex-shrink-0">
-              <SelectValue placeholder="Select Unit type" />
-            </SelectTrigger>
-            {/* </FormControl> */}
-            <SelectContent className='appearance-none outline-none focus-within:appearance-none flex-shrink-0'>
-              {unitTypes?.data?.map((unit: {name: string, id: number}) => (
-              <SelectItem key={unit.id} value={unit.name}>{unit.name}</SelectItem>
+      <div className="w-full flex gap-4">
+        <TextField
+          type="text"
+          name="address"
+          label="Residential Address"
+          placeholder="13, wilmer street"
+          control={control}
+          rules={{ required: "This filed is required" }}
+        />
+
+        <TextField
+          type="text"
+          name="city"
+          placeholder="ikoyi"
+          label="City"
+          control={control}
+          rules={{ required: "This filed is required" }}
+        />
+      </div>
+      <div className="w-full flex gap-4">
+        <TextField
+          type="text"
+          name="state"
+          label="State"
+          placeholder="Lagos"
+          control={control}
+          rules={{ required: "This filed is required" }}
+        />
+
+        <TextField
+          type="number"
+          name="postalCode"
+          placeholder="123454"
+          label="Postal Code"
+          control={control}
+          rules={{ required: "This filed is required" }}
+        />
+      </div>
+      <div className="w-full -mt-2">
+        <label
+          htmlFor={"selectCountry"}
+          className="block text-neutral-950 text-sm font-normal mb-[6px]"
+        >
+          Resident Country
+        </label>
+        <select
+          className="w-full h-12 px-2 bg-white rounded-[7px] border border-zinc-500 text-zinc-500 outline-none focus-within text-base font-normal leading-normal focus:bg-white disabled:opacity-75 disabled:hover:cursor-not-allowed mb-4"
+          value={countryId}
+          onChange={(e) => {
+            setCountryId(e.target.value);
+          }}
+        >
+          <option value="">Select Country</option>
+          {countries?.data?.map((country: any) => (
+            <option key={country.id} value={country.id}>
+              {country.name}
+            </option>
+          ))}
+          {countryIsPending && <option value="">loading...</option>}
+        </select>
+      </div>
+      
+      {/* kyc Info */}
+      <p className="font-bold">kyc Info</p>
+      <div className="w-full flex gap-4">
+        <div className="w-full -mt-1">
+          <label
+            htmlFor={"selectIdType"}
+            className="block text-neutral-950 text-sm font-normal mb-[6px]"
+          >
+            Valid ID
+          </label>
+          <select
+            className="w-full h-12 px-2 bg-white rounded-[7px] border border-zinc-500 text-zinc-500 outline-none focus-within text-base font-normal leading-normal focus:bg-white disabled:opacity-75 disabled:hover:cursor-not-allowed mb-4"
+            value={idType}
+            onChange={(e) => {
+              setIdType(e.target.value);
+            }}
+          >
+            <option value="">Select User Id Type</option>
+            {idTypes?.map((idType: any) => (
+              <option key={idType.id} value={idType.id}>
+                {idType.name}
+              </option>
             ))}
-            </SelectContent>
-          </Select>
+            {idTypesIsPending && <option value="">loading...</option>}
+          </select>
         </div>
-
-        <div className='w-full'>
-          <Select name='noOfBedrooms' onValueChange={handleBedroomsChange}>
-            {/* <FormControl> */}
-            <label htmlFor="noOfBedrooms" className="block text-neutral-950 text-sm font-normal mb-[6px] leading-tight">Bedrooms</label>
-            <SelectTrigger className="h-12 appearance-none outline-none focus-visible:ring-0 border border-[#838383] w-full flex-shrink-0">
-              <SelectValue placeholder="Select Bedrooms" />
-            </SelectTrigger>
-            {/* </FormControl> */}
-            <SelectContent className='appearance-none outline-none focus-within:appearance-none flex-shrink-0'>
-              {/* {employmentData?.data?.status?.map((status: string, index: number) => (
-              // <SelectItem key={index} value={status}>{status}</SelectItem>
-            ))} */}
-              <SelectItem value={"1"}>1</SelectItem>
-              <SelectItem value={"2"}>2</SelectItem>
-              <SelectItem value={"3"}>3</SelectItem>
-              <SelectItem value={"4"}>4</SelectItem>
-              <SelectItem value={"5"}>5</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
-      </div>
-
-
-      <div className='w-full flex gap-4'>
-        <div className='w-full'>
-          <Select name='noOfToilets' onValueChange={handleToiletsChange} >
-            {/* <FormControl> */}
-            <label htmlFor="noOfToilets" className="block text-neutral-950 text-sm font-normal mb-[6px] leading-tight">Toilets</label>
-            <SelectTrigger className="h-12 appearance-none outline-none focus-visible:ring-0 border border-[#838383] w-full flex-shrink-0">
-              <SelectValue placeholder="Select Toilets" />
-            </SelectTrigger>
-            {/* </FormControl> */}
-            <SelectContent className='appearance-none outline-none focus-within:appearance-none flex-shrink-0'>
-              {/* {employmentData?.data?.status?.map((status: string, index: number) => (
-              // <SelectItem key={index} value={status}>{status}</SelectItem>
-            ))} */}
-              <SelectItem value={"1"}>1</SelectItem>
-              <SelectItem value={"2"}>2</SelectItem>
-              <SelectItem value={"3"}>3</SelectItem>
-              <SelectItem value={"4"}>4</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
-
-        <div className='w-full'>
-          <Select name='noOfLivingRooms' onValueChange={handleLivingRoomsChange} >
-            {/* <FormControl> */}
-            <label htmlFor="noOfLivingRooms" className="block text-neutral-950 text-sm font-normal mb-[6px] leading-tight">Living rooms</label>
-            <SelectTrigger className="h-12 appearance-none outline-none focus-visible:ring-0 border border-[#838383] w-full flex-shrink-0">
-              <SelectValue placeholder="Select Living rooms" />
-            </SelectTrigger>
-            {/* </FormControl> */}
-            <SelectContent className='appearance-none outline-none focus-within:appearance-none flex-shrink-0'>
-              {/* {employmentData?.data?.status?.map((status: string, index: number) => (
-              // <SelectItem key={index} value={status}>{status}</SelectItem>
-            ))} */}
-              <SelectItem value={"1"}>1</SelectItem>
-              <SelectItem value={"2"}>2</SelectItem>
-              <SelectItem value={"3"}>3</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
-      </div>
-
-
-      <div className='w-full flex gap-4'>
-        <div className='w-full'>
-          <Select name='fittedKitchen' onValueChange={handleFittedKitchenChange}>
-            {/* <FormControl> */}
-            <label htmlFor="fittedKitchen" className="block text-neutral-950 text-sm font-normal mb-[6px] leading-tight">Fitted Kitchen?</label>
-            <SelectTrigger className="h-12 appearance-none outline-none focus-visible:ring-0 border border-[#838383] w-full flex-shrink-0">
-              <SelectValue placeholder="Select Fitted Kitchen?" />
-            </SelectTrigger>
-            {/* </FormControl> */}
-            <SelectContent className='appearance-none outline-none focus-within:appearance-none flex-shrink-0'>
-              {/* {employmentData?.data?.status?.map((status: string, index: number) => (
-              // <SelectItem key={index} value={status}>{status}</SelectItem>
-            ))} */}
-              <SelectItem value={"Yes"}>Yes</SelectItem>
-              <SelectItem value={"No"}>No</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
-
-        <div className='w-full'>
-          <Select name='furnishing' onValueChange={handleFurnishingChange}>
-            {/* <FormControl> */}
-            <label htmlFor="furnishing" className="block text-neutral-950 text-sm font-normal mb-[6px] leading-tight">Furnishing?</label>
-            <SelectTrigger className="h-12 appearance-none outline-none focus-visible:ring-0 border border-[#838383] w-full flex-shrink-0">
-              <SelectValue placeholder="Select Furnishing" />
-            </SelectTrigger>
-            {/* </FormControl> */}
-            <SelectContent className='appearance-none outline-none focus-within:appearance-none flex-shrink-0'>
-              {/* {employmentData?.data?.status?.map((status: string, index: number) => (
-              // <SelectItem key={index} value={status}>{status}</SelectItem>
-            ))} */}
-              <SelectItem value={"Fully Furnish"}>Fully Furnished</SelectItem>
-              <SelectItem value={"Partially Furnish"}>Partially Furnished</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
-      </div>
-
-      <div className='w-full flex gap-4'>
-        <TextField
-          type='number'
-          name='sqm'
-          label="Square meter"
-          placeholder='1342'
-          control={control}
-          rules={{ required: 'This filed is required' }}
-        />
 
         <TextField
-          type='number'
-          name='exitingTokenVolume'
-          placeholder='12400'
-          label="Exitable token volume"
+          type="number"
+          name="idNumber"
+          placeholder="23436"
+          label="Id Number"
           control={control}
-          rules={{ required: 'This filed is required' }}
+          rules={{ required: "This filed is required" }}
         />
       </div>
+      <TextField
+        type="date"
+        name="expiryDate"
+        label="Expiry Date (Optional)"
+        variant="xlong"
+        control={control}
+        rules={{ required: "This filed is required" }}
+      />
 
-      <div className='flex justify-end h-9 text-xs'>
-        <button
-          type='button'
-          className='flex justify-center items-center border rounded-lg px-4 cursor-pointer'>
-          Add new <span><Plus size={14} /></span>
-        </button>
+      {/* Income Info< */}
+      <p className="font-bold">Income Info</p>
+      <div className="w-full flex gap-x-4">
+        <div className="w-full -mt-2">
+          <label
+            htmlFor={"incomeRange"}
+            className="block text-neutral-950 text-sm font-normal mb-[6px]"
+          >
+            Income Range
+          </label>
+          <select
+            className="w-full h-12 px-2 bg-white rounded-[7px] border border-zinc-500 text-zinc-500 outline-none focus-within text-base font-normal leading-normal focus:bg-white disabled:opacity-75 disabled:hover:cursor-not-allowed"
+            value={incomeRangeValue}
+            onChange={(e) => {
+              setIncomeRangeValue(e.target.value);
+              incomeRange?.filter((item:any)=>{
+                if (item.range === e.target.value){
+                  setInvestmentLimit(item.investmentLimit)
+                }
+              })
+            }}
+          >
+            <option value="">Select Income Range</option>
+            {incomeRange?.map((range: any) => (
+              <option key={range.id} value={range.range}>
+                {range.range}
+              </option>
+            ))}
+            {incomeRangeIsPending && <option value="">loading...</option>}
+          </select>
+        </div>
+
+        <div className="w-full -mt-2">
+          <label
+            htmlFor={"employmentStatus"}
+            className="block text-neutral-950 text-sm font-normal mb-[6px]"
+          >
+            Employment Status
+          </label>
+          <select
+            className="w-full h-12 px-2 bg-white rounded-[7px] border border-zinc-500 text-zinc-500 outline-none focus-within text-base font-normal leading-normal focus:bg-white disabled:opacity-75 disabled:hover:cursor-not-allowed"
+            value={employmentStatusValue}
+            onChange={(e) => {
+              setEmploymentStatusValue(e.target.value);
+            }}
+          >
+            <option value="">Select Employment Status</option>
+            {employmentStatus?.status?.map((empStatus: any) => (
+              <option key={empStatus} value={empStatus}>
+                {empStatus}
+              </option>
+            ))}
+            {employmentStatusIsPending && <option value="">loading...</option>}
+          </select>
+        </div>
       </div>
+
+        <div className="w-full -mt-2">
+          <label
+            htmlFor={"jobSectors"}
+            className="block text-neutral-950 text-sm font-normal mb-[6px]"
+          >
+            Job Sector
+          </label>
+          <select
+            className="w-full h-12 px-2 bg-white rounded-[7px] border border-zinc-500 text-zinc-500 outline-none focus-within text-base font-normal leading-normal focus:bg-white disabled:opacity-75 disabled:hover:cursor-not-allowed"
+            value={jobSector}
+            onChange={(e) => {
+              setJobSector(e.target.value);
+            }}
+          >
+            <option value="">Select Job Sector</option>
+            {jobSectors?.map((jobSector: any) => (
+              <option key={jobSector.id} value={jobSector.sector}>
+                {jobSector.sector}
+              </option>
+            ))}
+            {jobSectorsIsPending && <option value="">loading...</option>}
+          </select>
+        </div>
+
+        {/* <TextField
+          type="number"
+          name="investmentLimit"
+          placeholder="23436"
+          label="Investment Limit"
+          control={control}
+          rules={{ required: "This filed is required" }}
+        /> */}
 
       <div className="flex justify-end gap-x-2 mt-6">
-        <Button onClick={() => setCurrentIndex(currentIndex - 1)}>
-          <span className='flex gap-1.5'><ArrowLeft className='' /> Back</span>
+        <Button onClick={() => setNewUserCurrentIndex(newUserCurrentIndex - 1)}>
+          <span className="flex gap-1.5">
+            <ArrowLeft className="" /> Back
+          </span>
         </Button>
-        <ForwardButton type='submit' variant="dark">
+        <ForwardButton type="submit" variant="dark">
           Continue
         </ForwardButton>
       </div>
-
     </form>
-  )
-}
+  );
+};
 
-export default Contact
+export default Contact;

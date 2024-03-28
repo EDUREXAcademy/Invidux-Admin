@@ -54,7 +54,7 @@ const Login = () => {
             />
             <Image src={showPassword ? hide : eye} alt="show password" className='absolute top-9 right-3 hover:cursor-pointer w-[20px] h-5' onClick={()=> setShowPassword(!showPassword)}/>
           </div>
-          <Link href='/token-issuers/forgot-password'><p className="text-sm text-zinc-900 underline font-normal leading-normal relative    mb-[20px]">Forgot password?</p></Link>
+          <Link href='/admin/forgot-password'><p className="text-sm text-zinc-900 underline font-normal leading-normal relative    mb-[20px]">Forgot password?</p></Link>
           <div className="w-full md:w-[166px]">
           <ForwardButton type="submit" variant="dark" fullWidth>Submit</ForwardButton>
           </div>

@@ -2,7 +2,7 @@ import { InvalidateQueryFilters, useMutation, useQueryClient } from "@tanstack/r
 import useStore from "@/store";
 import {login, verifyOtp, forgotPassword, verifyPasswordOtp, resendOtp,
   resendPasswordOtp, resetPassword, activateWallet, walletActivationOTP, resendWalletActivationOTP, 
-  resendTransactionOTP, setWalletPin, updateProfile, uploadProfileImage, updateContact, updateIncome, uploadCoverImage, uploadKYCImage, changePassword, changePin, issueToken } from "@/api";
+  resendTransactionOTP, setWalletPin, updateProfile, uploadProfileImage, updateContact, updateIncome, uploadCoverImage, uploadKYCImage, changePassword, changePin, issueToken, addNewUser } from "@/api";
 import { toast } from "react-toastify";
 import { redirect, useRouter } from "next/navigation";
 
@@ -199,6 +199,37 @@ export const useResetPassword = () => {
     },
   });
 };
+
+// Private Admin *******************************************************************************************
+export const useAddNewUser = () => {
+  const router = useRouter();
+  const store = useStore()
+  return useMutation({
+    mutationFn: addNewUser,
+    onSuccess: (data:any) => {
+      toast.success(data.message, {
+        toastId: "success1",
+      });
+    },
+    onError: (error: any) => {
+      console.log(error.data)
+      let resMessage;
+      error?.response?.status === 400 ?
+      resMessage = error.response.data.errorMessages : 
+      error?.response?.status === 500 ?
+      resMessage = error.response.data :
+      resMessage = (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      toast.error(resMessage);
+    },
+  });
+};
+
+
+
 
 
 // Wallet ****************************************************************************************************

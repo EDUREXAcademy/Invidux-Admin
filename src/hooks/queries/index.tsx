@@ -1,10 +1,40 @@
 import { useQuery } from "@tanstack/react-query";
-import {getAppUsers, getCountries, getDashboardDatas, getInvestmentTypes, getListingStatus, getPropertyAmenities, getPropertyClass, getPropertyTitles, getRoles, getTokenReviews, getUnitTypes, getUser, getUserWallet } from "@/api";
+import {getAppUsers, getCountries, getDashboardDatas, getEmploymentStatus, getIdTypes, getIncomeRange, getInvestmentTypes, getJobSectors, getListingStatus, getPropertyAmenities, getPropertyClass, getPropertyTitles, getRoles, getTokenReviews, getUnitTypes, getUser, getUserWallet } from "@/api";
 
 export const useCountries = () => {
   return useQuery({
     queryKey: ["countries"],
     queryFn: getCountries,
+  });
+};
+export const useIdTypes = () => {
+  return useQuery({
+    queryKey: ["idTypes"],
+    queryFn: getIdTypes,
+  });
+};
+export const useEmploymentStatus = () => {
+  return useQuery({
+    queryKey: ["employmentStatus"],
+    queryFn: getEmploymentStatus,
+  });
+};
+export const useIncomeRange = () => {
+  return useQuery({
+    queryKey: ["incomeRange"],
+    queryFn: getIncomeRange,
+  });
+};
+export const useJobSectors = () => {
+  return useQuery({
+    queryKey: ["jobSectors"],
+    queryFn: getJobSectors,
+  });
+};
+export const useGetRoles = () => {
+  return useQuery({
+    queryKey: ["roles"],
+    queryFn: getRoles,
   });
 };
 export const useDashboardDatas = () => {
@@ -34,6 +64,9 @@ export const useAppUsers = () => {
 
 
 
+
+
+
 export const useUserWallet = () => {
   return useQuery({
     queryKey: ["wallet"],
@@ -41,18 +74,7 @@ export const useUserWallet = () => {
   });
 };
 
-
-// Registration
-
-export const useGetRoles = () => {
-  return useQuery({
-    queryKey: ["roles"],
-    queryFn: getRoles,
-  });
-};
-
 // Token Issuance
-
 export const usePropertyTitles = () => {
   return useQuery({
     queryKey: ["propertyTitles"],
