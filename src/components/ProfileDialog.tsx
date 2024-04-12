@@ -74,7 +74,9 @@ const ProfileDialog = (props: Props) => {
               className="w-fit flex gap-1 group"
               onClick={() => {
                 localStorage.clear();
-                toast.warning("Logging out user");
+                toast.warning("Logging out user", {
+                  toastId: "warning1"
+                });
                 setTimeout(() => {
                   router.push("/admin/login");
                 }, 1500);

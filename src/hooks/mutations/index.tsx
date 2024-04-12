@@ -14,7 +14,12 @@ export const useLogin = () => {
     mutationFn: login,
     onSuccess: (data: any) => {
       store.setUser(data?.data)
-      if (data === 'Please verify your account.') {
+      if(data?.data?.role !== "Admin"){
+        router.push('/admin/login')
+        toast.error('You are not authorized to login to the admin platform', {
+          toastId: "error1",
+        })
+      }else if (data === 'Please verify your account.') {
         toast.success(data, {
           toastId: "success1",
         })

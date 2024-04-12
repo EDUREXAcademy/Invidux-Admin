@@ -68,10 +68,6 @@ const Login = () => {
             <Image src={apple} alt="apple" />
           </div>
         </div>
-        <div className='flex justify-center md:justify-start items-center gap-2'>
-          <p className="text-zinc-900 text-base font-normal leading-normal">Do not have an account?</p>
-          <Link href='/token-issuers/create-account'> <p className="text-[#B1924E] text-sm font-normal underline leading-normal">Sign up</p></Link>
-        </div>
       </div>
     </div>
   )

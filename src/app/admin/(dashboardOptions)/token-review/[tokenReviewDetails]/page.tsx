@@ -184,13 +184,14 @@ const ViewTokenReview = ({ params }: any) => {
       {/* Picture header */}
       <div className="flex flex-col md:flex-row justify-between items-center gap-4">
         {/* main Picture */}
-        <div className="relative">
+        <div className="relative flex-1">
           <Image
             src={
-              assetDetail?.propertyImages
-                ? `${process.env.NEXT_PUBLIC_BASE_URL}/${assetDetail?.images[0]}`
+              assetDetail?.images?.length >= 0
+                ? `${process.env.NEXT_PUBLIC_BASE_URL}/${assetDetail?.images[0]?.imageUrl}`
                 : ""
             }
+            // src={`${process.env.NEXT_PUBLIC_BASE_URL}/${assetDetail?.images[0]?.imageUrl}`}
             width={626}
             height={362}
             priority
@@ -205,11 +206,11 @@ const ViewTokenReview = ({ params }: any) => {
           </div>
         </div>
         {/* other pictures */}
-        <div className="grid grid-cols-4 md:grid-cols-2 gap-2">
+        <div className="grid grid-cols-4 md:grid-cols-2 gap-2 flex-1">
           <Image
             src={
-              assetDetail?.propertyImages
-                ? `${process.env.NEXT_PUBLIC_BASE_URL}/${assetDetail?.images[1]}`
+              assetDetail?.images?.length >= 0
+                ? `${process.env.NEXT_PUBLIC_BASE_URL}/${assetDetail?.images[1]?.imageUrl}`
                 : ""
             }
             width={626}
@@ -220,8 +221,8 @@ const ViewTokenReview = ({ params }: any) => {
           />
           <Image
             src={
-              assetDetail?.propertyImages
-                ? `${process.env.NEXT_PUBLIC_BASE_URL}/${assetDetail?.images[2]}`
+              assetDetail?.images?.length >= 0
+                ? `${process.env.NEXT_PUBLIC_BASE_URL}/${assetDetail?.images[2]?.imageUrl}`
                 : ""
             }
             width={626}
@@ -232,8 +233,8 @@ const ViewTokenReview = ({ params }: any) => {
           />
           <Image
             src={
-              assetDetail?.propertyImages
-                ? `${process.env.NEXT_PUBLIC_BASE_URL}/${assetDetail?.images[3]}`
+              assetDetail?.images?.length >= 0
+                ? `${process.env.NEXT_PUBLIC_BASE_URL}/${assetDetail?.images[3]?.imageUrl}`
                 : ""
             }
             width={626}
@@ -246,8 +247,8 @@ const ViewTokenReview = ({ params }: any) => {
             <div className="absolute w-full h-full bg-black opacity-60" />
             <Image
               src={
-                assetDetail?.propertyImages
-                  ? `${process.env.NEXT_PUBLIC_BASE_URL}/${assetDetail?.images[3]}`
+                assetDetail?.images?.length >= 0
+                  ? `${process.env.NEXT_PUBLIC_BASE_URL}/${assetDetail?.images[3]?.imageUrl}`
                   : ""
               }
               width={626}
@@ -256,17 +257,19 @@ const ViewTokenReview = ({ params }: any) => {
               alt="Product Picture"
               className="rounded-[8px]"
             />
-            <div className="absolute top-[40%] left-4 w-[156px] h-8 px-2 py-1 bg-white bg-opacity-10 rounded border border-zinc-300 justify-center items-center gap-2 inline-flex">
-              <Image src={fourSquare} alt="home" />
-              <p className="text-center text-zinc-300 text-sm font-normal leading-normal">
-                View all pictures
-              </p>
-            </div>
-            <div className="absolute top-[60%] left-4 w-[156px] h-8 px-2 py-1 rounded justify-center items-center gap-2 inline-flex">
-              <Image src={hexagon} alt="hexagon " />
-              <p className="text-center text-[#856E3B] text-sm font-medium leading-tight">
-                Virtual Tour
-              </p>
+            <div className="absolute top-[15%] md:top-[35%] flex flex-col items-center w-full">
+              <div className="text-nowrap w-fit h-8 px-2 py-1 bg-white bg-opacity-10 rounded border border-zinc-300 justify-center items-center gap-2 inline-flex">
+                <Image src={fourSquare} alt="home" />
+                <p className="text-center text-zinc-300 text-sm font-normal leading-normal">
+                  View all picture
+                </p>
+              </div>
+              <div className=" text-nowrap w-fit h-8 px-2 py-1 rounded justify-center items-center gap-2 inline-flex">
+                <Image src={hexagon} alt="hexagon " />
+                <p className="text-center text-[#856E3B] text-sm font-medium leading-tight">
+                  Virtual Tour
+                </p>
+              </div>
             </div>
           </div>
         </div>
@@ -402,6 +405,10 @@ const ViewTokenReview = ({ params }: any) => {
               </h2>
               <div className="text-[#585978] list-disc list-inside space-y-2.5 mt-2">
                 <p>{assetDetail?.description}</p>
+                {/* {assetDetail?.videoLink !== null && ()} */}
+                <p className="text-[#989898] text-sm font-normal font-['Inter'] underline leading-tight cursor-pointer">
+                  <a href={assetDetail?.videoLink} target="_blank"  >View property video</a>
+                </p>
               </div>
             </div>
           </div>
@@ -521,7 +528,7 @@ const ViewTokenReview = ({ params }: any) => {
                 Estimated Yield
               </h2>
               <p className="text-zinc-500 text-sm font-normal font-['Inter'] underline leading-tight cursor-pointer">
-                View Projection
+                <a href={assetDetail?.annualYield?.financialProjectionLink} target="_blank" >View Projection</a>
               </p>
             </div>
             <div className="grid grid-cols-2 w-full">
