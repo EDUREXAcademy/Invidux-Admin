@@ -47,6 +47,8 @@ export const Button = (props: IButton) => {
             variant === "dark" && disabled,
             "border border-black text-black hover:bg-[#3e3e3e] hover:text-white hover:border-white":
             variant === "outline",
+            "border border-black text-black hover:bg-[#3e3e3e] hover:text-white hover:border-white hover:cursor-not-allowed":
+            variant === "outline" && disabled,
           "bg-green-600  text-white hover:bg-white hover:text-black ":
             variant === "light" && success,
             "bg-red-500  text-white hover:bg-red-600 ":
