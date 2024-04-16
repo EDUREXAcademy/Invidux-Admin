@@ -117,16 +117,6 @@ const Property = (props: Props) => {
   }
   return (
     <form className='space-y-5 h-full mx-auto ' onSubmit={handleSubmit(saveProperty)}>
-      {/* <TextField
-        type='number'
-        name='propertyValue'
-        label="Property Value"
-        control={control}
-        variant="xlong"
-        placeholder='₦394,600.32'
-        rules={{ required: 'This filed is required' }}
-      /> */}
-
       <div className="w-full">
         <label htmlFor="propertyValue" className="block text-sm font-normal mb-1 leading-tight">Property Value</label>
         <NumericFormat
@@ -143,7 +133,6 @@ const Property = (props: Props) => {
           }
         />
       </div>
-
       <div className="w-full">
         <label htmlFor="totalTokenVolume" className="block text-sm font-normal mb-1 leading-tight">Total Token Volume</label>
         <NumericFormat
@@ -160,20 +149,6 @@ const Property = (props: Props) => {
         />
         <p className='text-xs text-[#B1924E] mt-1'>{issuePrice !== null ? `Issued Price: ₦${issuePrice?.toLocaleString()}` : ""}</p>
       </div>
-
-      {/* <CustomNumericInput id='totalTokenVolume' label='Total Token Volume' placeholder='34,444.01' /> */}
-      {/* <TextField
-        type='number'
-        name='totalTokenVolume'
-        label="Total Token Volume"
-        control={control}
-        variant="xlong"
-        placeholder='34,444.01'
-        helperText={issuePrice !== null ? `Issued Price: ₦${issuePrice?.toLocaleString()}` : ""}
-        rules={{ required: 'This filed is required' }}
-      /> */}
-
-
       <div className='w-full flex gap-4'>
         <TextField
           type='date'
@@ -184,18 +159,6 @@ const Property = (props: Props) => {
           min={today}
           rules={{ required: 'This filed is required' }}
         />
-
-        {/* Cool Off Date Input */}
-        {/* <TextField
-          type='date'
-          name='coolOffExpiresAt'
-          label="Cool Off Date"
-          control={control}
-          min={today}
-        // rules={{ required: 'This filed is required' }}
-        /> */}
-        {/* Cool Off Days Input */}
-
         <FormattedNumericInput
           label="Cool-Off Days"
           name="coolOffExpiresAt"
@@ -207,19 +170,7 @@ const Property = (props: Props) => {
           errors={errors}
         />
       </div>
-
-
       <div className='w-full flex gap-4'>
-        {/* <TextField
-          type='number'
-          name='issuePrice'
-          label="Price"
-          control={control}
-          variant='xlong'
-          placeholder='0'
-          rules={{ required: 'This filed is required' }}
-        /> */}
-
         {/* Currency Change  Select */}
         <div className='w-full'>
           <Select name='currency' onValueChange={handleCurrencyChange} >
@@ -236,7 +187,7 @@ const Property = (props: Props) => {
         </div>
       </div>
 
-      <div className='w-full flex gap-4'>
+      {/* <div className='w-full flex gap-4'>
         <TextField
           type='date'
           name='issueStartsAt'
@@ -246,45 +197,6 @@ const Property = (props: Props) => {
           min={today}
           rules={{ required: 'This filed is required' }}
         />
-
-        {/* Issuance End Date Input */}
-        {/* <TextField
-          type='date'
-          name='issueExpiresAt'
-          label="Issuance End Date"
-          control={control}
-          placeholder='12/2/2024'
-          min={today}
-          rules={{ required: 'This filed is required' }}
-        /> */}
-        {/* <TextField
-          name='issueExpiresAt'
-          label="Issuance Open Days"
-          control={control}
-          placeholder='2 days'
-          rules={{ required: 'This filed is required' }}
-        /> */}
-        {/* <div className="w-full">
-          <label htmlFor="issueExpiresAt" className="block text-sm font-normal mb-1.5 leading-tight">Issuance Open Days</label>
-          <NumericFormat
-            id="issueExpiresAt"
-            {...register("issueExpiresAt", {
-              required: "Issuance Open Days is required",
-            })}
-            className="inline-flex justify-start items-center gap-2 w-full h-12 px-2 bg-white rounded-[7px] border border-zinc-500 text-zinc-500 text-base font-normal leading-normal appearance-none outline-none focus:bg-white disabled:opacity-50 disabled:hover:cursor-not-allowed"
-            suffix=" days"
-            thousandSeparator=","
-            placeholder="10 days"
-            onValueChange={(values, sourceInfo) => {
-              setValue("issueExpiresAt", values.value)
-            }
-            }
-          />
-          {errors?.issueExpiresAt && errors?.issueExpiresAt?.message && (
-            // @ts-expect-error
-            <span className="text-red-500 text-xs mt-1">{errors?.issueExpiresAt?.message}</span>
-          )}
-        </div> */}
         <FormattedNumericInput
           label="Issuance Open Days"
           name="issueExpiresAt"
@@ -296,31 +208,8 @@ const Property = (props: Props) => {
           errors={errors}
           required='true'
         />
-      </div>
-
-      {/* Dealing End Date */}
-      {/* <TextField
-        type='date'
-        name='dealingExpiresAt'
-        label="Dealing End Date"
-        control={control}
-        variant="xlong"
-        placeholder='12/2/2024'
-        min={today}
-        rules={{ required: 'This filed is required' }}
-      /> */}
-
-      {/* Dealing Days */}
-      {/* <TextField
-        name='dealingExpiresAt'
-        label="Dealing Days"
-        control={control}
-        variant="xlong"
-        placeholder='2 days'
-        rules={{ required: 'This filed is required' }}
-      /> */}
-
-      <FormattedNumericInput
+      </div> */}
+      {/* <FormattedNumericInput
         label="Dealing Days"
         name="dealingExpiresAt"
         placeholder="5 days"
@@ -331,8 +220,6 @@ const Property = (props: Props) => {
         errors={errors}
         required='true'
       />
-
-
       <TextField
         type='number'
         name='dealersMinimumSubscriptionUnit'
@@ -341,26 +228,7 @@ const Property = (props: Props) => {
         variant='xlong'
         placeholder='20'
         rules={{ required: 'This filed is required' }}
-      />
-
-      {/* Lockdown Date */}
-      {/* <TextField
-        type='date'
-        name='lockdownExpiresAt'
-        label="Lockdown Date"
-        control={control}
-        variant='xlong'
-        min={today}
-        rules={{ required: 'This filed is required' }}
-      /> */}
-      {/* <TextField
-        name='lockdownExpiresAt'
-        label="Lockdown Days"
-        control={control}
-        variant='xlong'
-        placeholder='2 days'
-        rules={{ required: 'This filed is required' }}
-      /> */}
+      /> 
       <FormattedNumericInput
         label="Lockdown Days"
         name="lockdownExpiresAt"
@@ -371,9 +239,7 @@ const Property = (props: Props) => {
         setValue={setValue}
         errors={errors}
         required='true'
-      />
-
-
+      /> */}
       <TextField
         type='number'
         name='minimumSubscriptionUnit'
@@ -383,15 +249,6 @@ const Property = (props: Props) => {
         placeholder='10'
         rules={{ required: 'This filed is required' }}
       />
-      {/* <TextField
-        type='number'
-        name='issueRetainedToken'
-        label="Issuer Retained Token %"
-        control={control}
-        variant='xlong'
-        placeholder='5%'
-        rules={{ required: 'This filed is required' }}
-      /> */}
       <FormattedNumericInput
         label="Issuer Retained Token %"
         name="issueRetainedToken"
@@ -402,16 +259,6 @@ const Property = (props: Props) => {
         errors={errors}
         required='true'
       />
-      
-      {/* <TextField
-        type='number'
-        name='annualReturnEstimate'
-        label="Annual Returns Estimate"
-        control={control}
-        variant='xlong'
-        placeholder='10%'
-        rules={{ required: 'This filed is required' }}
-      /> */}
       <FormattedNumericInput
         label="Annual Returns Estimate"
         name="annualReturnEstimate"
@@ -422,15 +269,6 @@ const Property = (props: Props) => {
         errors={errors}
         required='true'
       />
-      {/* <TextField
-        type='number'
-        name='appreciationEstimate'
-        label="Annual Appreciation Estimate"
-        control={control}
-        variant='xlong'
-        placeholder='10%'
-      // rules={{ required: 'This filed is required' }}
-      /> */}
       <FormattedNumericInput
         label="Annual Appreciation Estimate"
         name="appreciationEstimate"

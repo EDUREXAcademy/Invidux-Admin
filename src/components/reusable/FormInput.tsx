@@ -69,14 +69,14 @@ export const MultilineTextField = ({
   const { field, fieldState } = useController(props);
 
   return (
-    <div className="w-fit mb-3">
+    <div className="w-full mb-3">
       <p className="block text-sm mb-[6px] capitalize">{label}</p>
       <textarea
         // field: { onChange, onBlur, value, name, ref },
         {...field}
         {...props}
         rows={5}
-        className="block rounded-[10px] appearance-none outline-none focus:bg-white border border-[#838383] mb-6 py-2 px-4"
+        className="block w-full rounded-[10px] appearance-none outline-none focus:bg-white border border-[#838383] mb-6 py-2 px-4"
       ></textarea>
       <p
         className={clsx("text-xs mt-[6px]", {

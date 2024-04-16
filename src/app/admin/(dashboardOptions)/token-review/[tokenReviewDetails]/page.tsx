@@ -16,6 +16,7 @@ import {
   PartyPopper,
   Signal,
   Sofa,
+  X,
 } from "lucide-react";
 import mainPic from "../../../../../assets/images/house-main.png";
 import firstPic from "../../../../../assets/images/house1.png";
@@ -35,11 +36,19 @@ import {
 import { toast } from "react-toastify";
 import { privateApi } from "@/api/adminAxios";
 import LoadingOverlay from "@/components/reusable/LoadingOverlay";
+import { MultilineTextField, TextField } from "@/components/reusable/FormInput";
+import FormattedNumericInput from "@/components/reusable/FormattedNumberInput";
+import { useForm } from "react-hook-form";
+import moment from "moment";
 
 type Props = {};
 
 const ViewTokenReview = ({ params }: any) => {
   const tokenId = params.tokenReviewDetails;
+  const [approve, setApprove] = useState(false)
+  const [reject, setReject] = useState(false)
+  const {control, register, getValues, setValue, handleSubmit, formState: { errors } } = useForm()
+  var today = moment().format("YYYY-MM-DD");
 
   const [assetDetail, setAssetDetail] = useState<any>({});
   const sold = assetDetail?.volume - assetDetail?.available;
@@ -79,12 +88,14 @@ const ViewTokenReview = ({ params }: any) => {
   const [unit, setUnit] = useState<number | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  const approveToken = async (tokenId:any) => {
+  const approveToken = async (data:any) => {
     try {
       setIsLoading(true);
       const response = await privateApi.patch(
-        `/api/v1/property-tokens/${tokenId}`,
-        {approve: true,}
+        `/api/v1/property-tokens/${assetDetail?.id}`,
+        {approvalSettings: data,
+          approve: true,
+        }
       );
       toast.success(response.data.message, {toastId: "success1"});
       setIsLoading(false);
@@ -105,12 +116,14 @@ const ViewTokenReview = ({ params }: any) => {
     }
   };
 
-  const rejectToken = async (tokenId:any) => {
+  const rejectToken = async () => {
     try {
       setIsLoading(true);
       const response = await privateApi.patch(
-        `/api/v1/property-tokens/${tokenId}`,
-        {approve: false,}
+        `/api/v1/property-tokens/${assetDetail?.id}`,
+        { approvalNote: getValues('approvalNote'),
+          approve: false,
+        }
       );
       toast.success(response.data.message, {toastId: "success1"});
       setIsLoading(false);
@@ -588,7 +601,7 @@ const ViewTokenReview = ({ params }: any) => {
             </div>
           </div>
           <div className="mb-4">
-            <Button fullWidth disabled={assetDetail?.approval?.status !== 'Pending' ? true : false }  variant="dark" onClick={() => approveToken(assetDetail?.id)}>
+            <Button fullWidth variant="dark" disabled={assetDetail?.approval?.status !== 'Pending' ? true : false } onClick={() => setApprove(true)}>
               Approve
             </Button>
           </div> 
@@ -596,11 +609,111 @@ const ViewTokenReview = ({ params }: any) => {
             fullWidth
             variant="outline"
             className="w-full"
-            onClick={() => rejectToken(assetDetail?.id)}
+            onClick={() => setReject(true)}
             disabled={assetDetail?.approval?.status !== 'Pending' ? true : false } 
           >
             Reject
           </Button>
+
+          {approve && (
+            <div className="animate-jump py-4 flex flex-col justify-center fixed top-0 left-0 z-50 w-full h-full bg-[#3a3a3a]/30 backdrop-blur-[8px]">
+            <div className="py-4 lg:w-[992px] mx-auto max-h-full rounded-[16px] bg-white z-50 overflow-auto no-scrollbar">           
+              <div className='px-10 mb-8 flex items-center gap-x-4 justify-between border-b border-[#B1924E] '>
+                <h2 className="text-[#B1924E] text-[24px] font-bold mb-4">Approval Settings</h2>
+                <X className="ml-auto w-fit text-black" onClick={()=>setApprove(!approve)} />
+              </div>
+              <form className="flex flex-col gap-y-4 px-10"
+                onSubmit={handleSubmit(approveToken)}
+              >
+                <div className='w-full flex gap-4'>
+                  <div className="flex-1">
+                  <TextField
+                    type='date'
+                    name='issueStartsAt'
+                    label="Issuance Start Date"
+                    control={control}
+                    placeholder='12/2/2024'
+                    min={today}
+                    rules={{ required: 'This filed is required' }}
+                  />
+                  </div>
+                  <div className="flex-1">
+                  <FormattedNumericInput
+                    label="Issuance Open Days"
+                    name="issueExpiresAt"
+                    placeholder="5 days"
+                    suffix=" days"
+                    thousandSeparator=","
+                    register={register}
+                    setValue={setValue}
+                    errors={errors}
+                    required='true'
+                  />
+                  </div>
+                </div>
+                <FormattedNumericInput
+                  label="Dealing Days"
+                  name="dealingExpiresAt"
+                  placeholder="5 days"
+                  suffix=" days"
+                  thousandSeparator=","
+                  register={register}
+                  setValue={setValue}
+                  errors={errors}
+                  required='true'
+                />
+                <TextField
+                  type='number'
+                  name='dealersMinimumSubscriptionUnit'
+                  label="Dealer Subscription Unit"
+                  control={control}
+                  variant='xlong'
+                  placeholder='20'
+                  rules={{ required: 'This filed is required' }}
+                /> 
+                <FormattedNumericInput
+                  label="Lockdown Days"
+                  name="lockdownExpiresAt"
+                  placeholder="5 days"
+                  suffix=" days"
+                  thousandSeparator=","
+                  register={register}
+                  setValue={setValue}
+                  errors={errors}
+                  required='true'
+                />
+                <div className='w-fit ml-auto flex gap-4'>
+                  <Button variant="outline" onClick={()=>setApprove(!approve)}>Cancel</Button>
+                  <Button variant="dark" type="submit" >Submit</Button>
+                </div>
+              </form>
+            </div>
+            </div>
+          )}
+
+          {reject && (
+            <div className="animate-jump py-4 flex flex-col justify-center fixed top-0 left-0 z-50 w-full h-full bg-[#3a3a3a]/30 backdrop-blur-[8px]">
+            <div className="py-4 lg:w-[992px] mx-auto max-h-full rounded-[16px] bg-white z-50 overflow-auto no-scrollbar">           
+              <div className='px-10 mb-8 flex items-center gap-x-4 justify-between border-b border-[#B1924E] '>
+                <h2 className="text-[#B1924E] text-[24px] font-bold mb-4">Rejection Note</h2>
+                <X className="ml-auto w-fit text-black" onClick={()=>setApprove(!approve)} />
+              </div>
+              <form className="flex flex-col gap-y-4 px-10"
+                onSubmit={handleSubmit(rejectToken)}
+              >
+                <MultilineTextField
+                 name="approvalNote"
+                 label="Reason for rejecting"
+                 control={control}
+                />
+                <div className='w-fit ml-auto flex gap-4'>
+                  <Button variant="outline" onClick={()=>setReject(!reject)}>Cancel</Button>
+                  <Button variant="dark" type="submit" >Submit</Button>
+                </div>
+              </form>
+            </div>
+            </div>
+          )}
         </div>
       </div>
     </div>

@@ -87,27 +87,10 @@ const MultiStepForm = ({ children }: Props) => {
           <div className={`${currentIndex === 5 ? "block" : "hidden"}`}>
             <Description />
           </div>
-          {/* <div className={`${currentIndex === 6 ? "block" : "hidden"}`}>
-            <Distribution />
-          </div> */}
           <div className={`${currentIndex === 7 ? "block" : "hidden"}`}>
             <FilesUpload />
           </div>
           {currentIndex === 6 && <Distribution />}
-          {/* {currentIndex === 3 && <PreSellingTerms />}
-          {currentIndex === 4 && <PropertyDetails />}
-          {currentIndex === 5 && <Description />}
-          {currentIndex === 7 && <FilesUpload />} */}
-          {/* <div className="flex justify-end gap-x-2 mt-6">
-            <Button>Save</Button>
-            <ForwardButton type="button" variant="dark" onClick={()=> {
-              if(currentIndex < formTitles.length-1) {
-                setCurrentIndex(current => current + 1)
-              }
-            }}>
-              Continue
-            </ForwardButton>
-          </div> */}
 
         </div>
           {currentIndex === formTitles?.length - 1 && <DialogClose>
