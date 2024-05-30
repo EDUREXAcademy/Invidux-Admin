@@ -6,7 +6,9 @@ import AddNewUserModal from "@/components/user-management/AddUserModal/AddNewUse
 import ManageUserTable from "@/components/user-management/ManageUserTable";
 import { useAppUsers } from "@/hooks/queries";
 import { ListFilter, Plus, Search, UserRound } from "lucide-react";
+import Image from "next/image";
 import React, { useState } from "react";
+import logo from '../../../../../assets/icons/logo.svg'
 
 const ManageUsers = () => {
   const {data:AppUsers, isPending} = useAppUsers()
@@ -15,6 +17,10 @@ const ManageUsers = () => {
     <div className="">
       {isPending && <LoadingOverlay/> }
       {isAddUser && <AddNewUserModal isAddUser={isAddUser} setIsAddUser={setIsAddUser} /> }
+      {/* Mobile logo */}
+      <div className="bg-[#f0f2f5] py-4 md:hidden">
+        <Image src={logo} alt="logo" className="w-[100px] ml-[3%]"/>
+      </div>
       <div className="px-[3%]">
         <div className="flex justify-between items-center pt-5 pb-4 ">
           <p className="text-sm md:text-2xl font-[500]">User Management</p>

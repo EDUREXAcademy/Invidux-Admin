@@ -15,6 +15,7 @@ type Store = {
   issuedTokenId: string;
   addUserData: {};
   newUserCurrentIndex: number;
+  openMobileSidebar: boolean;
   setEmail: (authEmail: string) => void;
   setUsername: (username: string) => void;
   setUser: (authUser: IUser | null) => void;
@@ -28,6 +29,7 @@ type Store = {
   setIssuedTokenId: (tokenId: string) => void;
   setAddUserData: (addUserData: {}) => void;
   setNewUserCurrentIndex: (userIndex: number) => void;
+  setOpenMobileSidebar: (openStatus: boolean) => void;
 };
 
 const defaultTokenIssuanceData: TokenIssuanceData = {
@@ -114,6 +116,7 @@ const useStore = create(
       issuedTokenId: "",
       addUserData: {},
       newUserCurrentIndex: 0,
+      openMobileSidebar: false,
       setEmail: (authEmail: string) =>
         set((state) => ({ ...state, email: authEmail })),
       setUsername: (username: string) =>
@@ -134,6 +137,7 @@ const useStore = create(
       setIssuedTokenId: (tokenId: string) => set({ issuedTokenId: tokenId }),
       setAddUserData: (addUserData: {}) => set({ addUserData: addUserData }),
       setNewUserCurrentIndex: (userIndex: number) => set({ newUserCurrentIndex: userIndex}),
+      setOpenMobileSidebar: (value: boolean) => set({ openMobileSidebar: value }),
     }),
     {
       name: "store", // Set a name for your persisted store

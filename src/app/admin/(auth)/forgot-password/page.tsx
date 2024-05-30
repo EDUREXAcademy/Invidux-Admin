@@ -48,7 +48,7 @@ const ForgotPassword = () => {
         </form>
         <div className='flex justify-center md:justify-start items-center gap-2 mt-[40px]'>
           <p className="text-zinc-900 text-base font-normal leading-normal">Remember your password?</p>
-          <Link href='/token-issuers/login'> <p className="text-[#B1924E] text-base font-normal underline leading-normal">Login</p></Link>
+          <Link href='/admin/login'> <p className="text-[#B1924E] text-base font-normal underline leading-normal">Login</p></Link>
         </div>
       </div>
     </div>

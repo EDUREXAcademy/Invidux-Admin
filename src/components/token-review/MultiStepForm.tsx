@@ -63,11 +63,6 @@ const MultiStepForm = ({ children }: Props) => {
         </DialogHeader>
         {/* <form onSubmit={handleSubmit(submitForm)}> */}
         <div>
-
-
-          {/* {currentIndex === 0 && <TokenType />} */}
-          {/* {currentIndex === 0 && <TokenType />} */}
-          {/* {currentIndex === 1 && <Location />} */}
           <div className={`${currentIndex === 0 ? "block" : "hidden"}`}>
             <TokenType />
           </div>

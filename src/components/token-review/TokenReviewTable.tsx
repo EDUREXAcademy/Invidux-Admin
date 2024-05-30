@@ -17,8 +17,8 @@ const TokenReviewTable = () => {
   return (
     <div className=" bg-[#F0F2F5] py-5 px-4 md:px-8 min-h-[calc(100vh-70px)]">
       {isPending && <LoadingOverlay/> }
-      <div className="w-full flex flex-col-reverse md:flex-row gap-x-14 gap-y-5 items-center mt-10 overflow-visible">
-        <ul className="flex text-xs md:text-sm lg:text-base gap-4  md:gap-8 border-b overflow-x-auto overflow-hidden no-scrollbar">
+      <div className="w-full flex flex-col-reverse md:flex-row gap-x-14 gap-y-5 mt-10 overflow-visible">
+        <ul className="flex text-xs md:text-sm lg:text-base gap-4 md:gap-8 border-b overflow-x-auto overflow-hidden no-scrollbar">
           {menuBars?.map(({ label, item }: any) => (
             <li
               key={item}

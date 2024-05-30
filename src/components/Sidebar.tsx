@@ -12,6 +12,7 @@ import { usePathname } from "next/navigation"
 import Link from "next/link"
 import Image from "next/image"
 import ProfileDialog from "./ProfileDialog"
+import useStore from "@/store"
 
 
 type Props = {
@@ -22,6 +23,7 @@ type Props = {
 const Sidebar = ({ userData }: Props) => {
 
     const pathname: string = usePathname();
+    const { setOpenMobileSidebar } = useStore();
     // console.log(pathname)
 
     const routes = [
@@ -60,15 +62,19 @@ const Sidebar = ({ userData }: Props) => {
               </Link>
               <div className='flex flex-col gap-y-4'>
                   {routes.map((route) => (
-                      <Link href={route.href} key={route.href} className={`group flex p-3 w-full justify-start font-medium cursor-pointer hover:bg-white/10 transition h-[56px]
-                          ${pathname.includes(`/admin/${route.path}`) ? "text-[#B1924E] bg-white/10 border-l-4 border-l-[#B1924E] pl-5" : "text-[#545454] pl-6"}`
-                      }>
+                    <Link href={route.href} key={route.href}
+                      onClick={() => {
+                        setOpenMobileSidebar(false);
+                      }}
+                        className={`group flex p-3 w-full justify-start font-medium cursor-pointer hover:bg-white/10 transition h-[56px]
+                            ${pathname.includes(`/admin/${route.path}`) ? "text-[#B1924E] bg-white/10 border-l-4 border-l-[#B1924E] pl-5" : "text-[#545454] pl-6"}`
+                        }>
                           <div className="flex gap-2 items-center flex-1">
                               {/* <route.icon /> */}
                               <Image src={route.icon} alt={route.label} />
                               {route.label}
                           </div>
-                      </Link>
+                    </Link>
                   ))}
               </div>
           </div>
